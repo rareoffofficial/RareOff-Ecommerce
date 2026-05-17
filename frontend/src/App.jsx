@@ -28,6 +28,14 @@ import Faqs from "./pages/Faqs";
 
 import ProtectedRoute from "./routes/ProtectedRoute";
 
+import AdminLayout from "./admin/layout/AdminLayout";
+import AdminDashboard from "./admin/pages/AdminDashboard";
+import AdminProducts from "./admin/pages/AdminProducts";
+import AdminProductForm from "./admin/pages/AdminProductForm";
+import AdminCategories from "./admin/pages/AdminCategories";
+import AdminOrders from "./admin/pages/AdminOrders";
+import AdminOrderDetail from "./admin/pages/AdminOrderDetail";
+
 function HomePage() {
   return (
     <>
@@ -52,6 +60,7 @@ function HomePage() {
 export default function App() {
   return (
     <Routes>
+      {/* PUBLIC */}
       <Route path="/" element={<HomePage />} />
       <Route path="/shop" element={<Shop />} />
       <Route path="/product/:id" element={<ProductDetails />} />
@@ -60,9 +69,28 @@ export default function App() {
       <Route path="/about" element={<About />} />
       <Route path="/faqs" element={<Faqs />} />
 
+      {/* USER */}
       <Route path="/cart"     element={<ProtectedRoute><Cart /></ProtectedRoute>} />
       <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
       <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
+
+      {/* ADMIN */}
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute admin>
+            <AdminLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index                       element={<AdminDashboard />} />
+        <Route path="products"             element={<AdminProducts />} />
+        <Route path="products/new"         element={<AdminProductForm />} />
+        <Route path="products/:id/edit"    element={<AdminProductForm />} />
+        <Route path="categories"           element={<AdminCategories />} />
+        <Route path="orders"               element={<AdminOrders />} />
+        <Route path="orders/:id"           element={<AdminOrderDetail />} />
+      </Route>
     </Routes>
   );
 }
