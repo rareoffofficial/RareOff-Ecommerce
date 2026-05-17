@@ -1,0 +1,16 @@
+# Dev-only overrides. Verbose logging, schema validation, SQL echo.
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate        # Flyway owns schema; JPA only validates mapping
+    show-sql: true
+  devtools:
+    restart:
+      enabled: true
+
+logging:
+  level:
+    root: INFO
+    com.rareoff: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE
